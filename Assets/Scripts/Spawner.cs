@@ -15,27 +15,42 @@ public class Spawner : MonoBehaviour
     [SerializeField] KeyCode _moveLeftKey = KeyCode.LeftArrow;
     [SerializeField, Min(0)] float _moveValue = 3;
 
+    private float _minX = -2.0f;
+    private float _maxX = 2.0f;
+
     void Update()
     {
         // 右移動キーが押されていたら
         if (Input.GetKey(_moveRightKey))
         {
             // スポナーを右に移動させる
-            transform.Translate(Vector3.right * _moveValue * Time.deltaTime);
+            transform.Translate(_moveValue * Time.deltaTime * Vector3.right);
         }
 
         // 左移動キーが押されていたら
         if (Input.GetKey(_moveLeftKey))
         {
-            // スポナーを右に移動させる
-            transform.Translate(Vector3.left * _moveValue * Time.deltaTime);
+            // スポナーを左に移動させる
+            transform.Translate(_moveValue * Time.deltaTime * Vector3.left);
         }
+
+        // 現在位置を変数で保存
+        Vector3 _currentPos = transform.position;
+
+        // 現在位置の内、x値の範囲を制限する
+        _currentPos.x = Mathf.Clamp(_currentPos.x, _minX, _maxX);
+
+        // 変数の値を、現在位置に代入する
+        transform.position = _currentPos;
 
         // 生成キーが押されたら
         if (Input.GetKeyDown(_spawnKey))
         {
             // プレハブインスタンスを生成する
             Instantiate(_spawnObject, transform.position, transform.rotation * _spawnObject.transform.rotation);
+
+            //GameObject clone = Instantiate(_spawnObject, transform.position, transform.rotation * _spawnObject.transform.rotation);
+            //clone.GetComponent<Rigidbody>().velocity = transform.forward * 30;
         }
     }
 }
