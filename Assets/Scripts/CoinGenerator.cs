@@ -14,6 +14,9 @@ public class CoinGenerator : MonoBehaviour
     [SerializeField, Header("オブジェクトプールの最大サイズ")]
     int _maxPoolSize;
 
+    // オブジェクトプールのディクショナリ
+    private Dictionary<string, ObjectPool<GameObject>> _itemPools = new Dictionary<string, ObjectPool<GameObject>>();
+
     ObjectPool<GameObject> _coinPool;
 
     void Start()
@@ -30,7 +33,7 @@ public class CoinGenerator : MonoBehaviour
 
     GameObject CreatePoolObj()
     {
-        GameObject _pooledCoin = Instantiate(_coinPrefab,transform);
+        GameObject _pooledCoin = Instantiate(_coinPrefab, transform);
         return _pooledCoin;
     }
 
