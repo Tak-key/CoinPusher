@@ -11,7 +11,7 @@ public class Spawner : MonoBehaviour
     KeyCode _spawnKey = KeyCode.Space;
 
     [SerializeField, Header("コインのオブジェクトプールジェネレーター")]
-    CoinGenerator _coinGenerator;
+    ObjectPool _coinGenerator;
 
     [SerializeField, Header("コインのスポーンポジション")]
     GameObject _spawnPosition;
@@ -65,7 +65,7 @@ public class Spawner : MonoBehaviour
             _coinRb.isKinematic = true;
             _coinRb.isKinematic = false;
             _coinRb.velocity = transform.forward * 30;
-            _sceneDirector.LostAmmo(-1);
+            //_sceneDirector.LostAmmo(-1);
 
             //GameObject clone = Instantiate(_spawnObject, transform.position, transform.rotation * _spawnObject.transform.rotation);
             //clone.GetComponent<Rigidbody>().velocity = transform.forward * 30;

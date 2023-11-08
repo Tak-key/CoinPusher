@@ -8,6 +8,7 @@ TagManager:
   - SceneDirector
   - ScoreZone
   - ScoreObject
+  - DropZone
   layers:
   - Default
   - TransparentFX

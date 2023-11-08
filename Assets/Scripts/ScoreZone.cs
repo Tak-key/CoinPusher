@@ -26,7 +26,6 @@ public class ScoreZone : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "ScoreObject":
-                _sceneDirector.GetScore();
                 _coinCount++;
                 Debug.Log(_coinCount);
                 if (_coinCount == _coinCountMax)
