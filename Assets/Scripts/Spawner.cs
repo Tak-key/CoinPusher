@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField, Header("コインを撃つポインター")]
-    GameObject _shotLine;
-
     [SerializeField, Header("シーンディレクター")]
     SceneDirector _sceneDirector;
 
@@ -22,6 +19,9 @@ public class Spawner : MonoBehaviour
     [SerializeField, Header("移動キーと移動量（ユニット/秒）"), Min(0)]
     float _moveValue = 3;
 
+    [SerializeField, Header("ラインレンダラー")]
+    LineRenderer _lineRenderer;
+
     [Header("左右の移動幅の制限値")]
     [SerializeField, Tooltip("左")] float _minX = -2.0f;
     [SerializeField, Tooltip("右")] float _maxX = 2.0f;
@@ -30,14 +30,21 @@ public class Spawner : MonoBehaviour
     [SerializeField, Tooltip("上")] float _maxY = 6.0f;
     [SerializeField, Tooltip("下")] float _minY = 2.0f;
 
+    private Vector3[] linePositions;
+
     private void Start()
     {
-        _shotLine.SetActive(false);
     }
 
     void Update()
     {
         Move();
+       
+        linePositions = new Vector3[] {new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3(transform.position.x, transform.position.y, 7)};
+        _lineRenderer.startWidth = 0.025f;                   // 開始点の太さを0.1にする
+        _lineRenderer.endWidth = 0.025f;                     // 終了点の太さを0.1にする
+
+        _lineRenderer.SetPositions(linePositions);
 
         if (_sceneDirector._ammoCount <= 0)
             {
@@ -45,7 +52,6 @@ public class Spawner : MonoBehaviour
             }
         else if (Input.GetKey(_spawnKey))
         {
-            _shotLine.SetActive(true);
         }
 
         // 生成キーが押されたら
@@ -58,13 +64,14 @@ public class Spawner : MonoBehaviour
             Rigidbody _coinRb = _coin.GetComponent<Rigidbody>();
             _coinRb.isKinematic = true;
             _coinRb.isKinematic = false;
-            //_coinRb.velocity = transform.forward * 30;
+            _coinRb.velocity = transform.forward * 30;
             _sceneDirector.LostAmmo(-1);
-            _shotLine.SetActive(false);
 
             //GameObject clone = Instantiate(_spawnObject, transform.position, transform.rotation * _spawnObject.transform.rotation);
             //clone.GetComponent<Rigidbody>().velocity = transform.forward * 30;
         }
+
+
     }
 
     private void Move()
