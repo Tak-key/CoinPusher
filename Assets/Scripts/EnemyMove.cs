@@ -61,15 +61,25 @@ public class EnemyMove : MonoBehaviour
 
     }
 
-    void OnCollisionEnter(Collision col)
+    private void OnTriggerEnter(Collider other)
     {
-        if (col.gameObject.CompareTag("ScoreObject"))
+        if (other.gameObject.CompareTag("ScoreObject"))
         {
             Debug.Log("G‚Á‚Ä‚é");
             _audioSource.Play();
-            ObjectPool.Instance.DelCoin(col.gameObject);
+            ObjectPool.Instance.DelCoin(other.gameObject);
         }
     }
+
+    //void OnCollisionEnter(Collision col)
+    //{
+    //    if (col.gameObject.CompareTag("ScoreObject"))
+    //    {
+    //        Debug.Log("G‚Á‚Ä‚é");
+    //        _audioSource.Play();
+    //        ObjectPool.Instance.DelCoin(col.gameObject);
+    //    }
+    //}
 
     Transform SearchNearObject(string targetTag)
     {
@@ -85,6 +95,11 @@ public class EnemyMove : MonoBehaviour
 
         foreach(GameObject target in targets)
         {
+            if (target.transform.position.y > 0)
+            {
+                continue;
+            }
+
             Vector3 distanceDiff = target.transform.position - transform.position;
             float currectDistance = distanceDiff.sqrMagnitude;
             if (currectDistance < distance)

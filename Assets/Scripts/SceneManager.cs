@@ -28,9 +28,8 @@ public class SceneManager : MonoBehaviour
 
     void Update()
     {
-        //_time -= Time.deltaTime;
-        //_timerText.text = $"Time :{_time.ToString("F1")}";
-        _timerText.SetText("c‚èŠÔF‰¼’u‚«");
+        _time -= Time.deltaTime;
+        _timerText.SetText($"Time :{_time.ToString("F1")}");
 
 
         //if (_time < 0)
