@@ -13,12 +13,15 @@ public class EnemyMove : MonoBehaviour
     [SerializeField, Header("目標地点")]
     Transform targetPos;
 
-    string targetTag = "ScoreObject";
+    [SerializeField, Header("オーディオソース")]
+    AudioSource _audioSource;
+
+    private string targetTag = "ScoreObject";
+
+    private float count;
     void Start()
     {
         DecideTargetPos();
-
-        SearchNearObject(targetTag);
     }
 
     // Update is called once per frame
@@ -28,15 +31,22 @@ public class EnemyMove : MonoBehaviour
 
         if (transform.position.x == targetPos.position.x)
         {
+            count += Time.deltaTime;
+        }
+
+        if(count >= 5)
+        {   
             DecideTargetPos();
+            count = 0;
         }
     }
 
     void DecideTargetPos()
     {
+        Debug.Log("入った");
         Transform target = SearchNearObject(targetTag);
 
-        if(target != null)
+        if (target != null)
         {
             targetPos.position = target.position;
         }
@@ -45,9 +55,10 @@ public class EnemyMove : MonoBehaviour
             Debug.Log("ターゲットなし");
             return;
         }
+
         //targetPos.position = new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-3f, -3.75f));
 
-        
+
     }
 
     void OnCollisionEnter(Collision col)
@@ -55,6 +66,7 @@ public class EnemyMove : MonoBehaviour
         if (col.gameObject.CompareTag("ScoreObject"))
         {
             Debug.Log("触ってる");
+            _audioSource.Play();
             ObjectPool.Instance.DelCoin(col.gameObject);
         }
     }
@@ -82,6 +94,13 @@ public class EnemyMove : MonoBehaviour
             }
         }
 
-        return resultTarget.transform;
+        if (resultTarget == null)
+        {
+            return null;
+        }
+        else
+        {
+            return resultTarget.transform;
+        }
     }
 }

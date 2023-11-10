@@ -5,7 +5,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField, Header("シーンディレクター")]
-    SceneDirector _sceneDirector;
+    SceneManager _sceneDirector;
 
     [SerializeField, Header("コインの生成キー")]
     KeyCode _spawnKey = KeyCode.Space;
@@ -21,6 +21,9 @@ public class Spawner : MonoBehaviour
 
     [SerializeField, Header("ラインレンダラー")]
     LineRenderer _lineRenderer;
+
+    [SerializeField, Header("オーディオソース")]
+    AudioSource _audioSource;
 
     [Header("左右の移動幅の制限値")]
     [SerializeField, Tooltip("左")] float _minX = -2.0f;
@@ -65,6 +68,7 @@ public class Spawner : MonoBehaviour
             _coinRb.isKinematic = true;
             _coinRb.isKinematic = false;
             _coinRb.velocity = transform.forward * 30;
+            _audioSource.Play();
             //_sceneDirector.LostAmmo(-1);
 
             //GameObject clone = Instantiate(_spawnObject, transform.position, transform.rotation * _spawnObject.transform.rotation);

@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class ScoreObject : MonoBehaviour
 {
-    //コインジェネレ―タースクリプトを変数として宣言
-    ObjectPool _coinGenScript;
+    [SerializeField, Header("音を鳴らすオブジェクト")]
+    GameObject _audioObject;
 
     [Header("得点")]
     public int _scorePoint;
     private void Start()
     {
-        //コインジェネレ―タースクリプトをキャッシュ
-        _coinGenScript = GameObject.FindWithTag("CoinPool").GetComponent<ObjectPool>();
     }
 
     void Update()
     {
+        if (transform.position.y < 0)
+        {
+            gameObject.tag = "ScoreObject";
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,8 +26,9 @@ public class ScoreObject : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "ScoreZone":
+                Instantiate(_audioObject, transform.position, Quaternion.identity);
                 ObjectPool.Instance.DelCoin(gameObject);
-                SceneDirector.GetScore(_scorePoint);
+                SceneManager.GetScore(_scorePoint);
                 break;
 
             case "DropZone":

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScoreZone : MonoBehaviour
 {
     [SerializeField, Header("シーンディレクター")]
-    SceneDirector _sceneDirector;
+    SceneManager _sceneDirector;
 
     [SerializeField, Header("コインカウントの上限")]
     int _coinCountMax = 20;

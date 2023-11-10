@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class SceneDirector : MonoBehaviour
+public class SceneManager : MonoBehaviour
 {
     [Header("更新するテキスト")]
     [SerializeField, Tooltip("タイマーテキスト")] TextMeshProUGUI _timerText;
@@ -30,6 +30,7 @@ public class SceneDirector : MonoBehaviour
     {
         //_time -= Time.deltaTime;
         //_timerText.text = $"Time :{_time.ToString("F1")}";
+        _timerText.SetText("残り時間：仮置き");
 
 
         //if (_time < 0)
@@ -38,7 +39,8 @@ public class SceneDirector : MonoBehaviour
         //}
 
         _scoreText.text = $"得点:{_scorePoint.ToString("F0")}";
-        _ammoText.text = $"残弾数:{_ammoCount.ToString("F0")}";
+        //_ammoText.text = $"残弾数:{_ammoCount.ToString("F0")}";
+        _ammoText.SetText("残弾数：仮置き");
     }
 
     public static void GetScore(int score)
